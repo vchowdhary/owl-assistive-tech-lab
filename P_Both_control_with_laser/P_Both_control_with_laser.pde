@@ -1,3 +1,5 @@
+import gab.opencv.*;
+
 // versions used : processing 2.0b7, controlP5 2.0.4
 
 import controlP5.*;
