@@ -1,24 +1,20 @@
 #include <Servo.h>
 Servo mysservo;  // create servo object to control a servo
 Servo myWservo;  // create servo object to control a servo
-
 //Copy Data to here
-int closk_wise_down=40;
-int closk_wise_back=54;
-int closk_wise_up=69;
-int closk_wise_front=81;
-int closk_wise_down_twin=94;
-int closk_wise_back_twin=108;
-
-int counter_closk_wise_down=86;
-int counter_closk_wise_front=75;
-int counter_closk_wise_up=63;
-int counter_closk_wise_back=48;
-
+int clock_wise_back=40;
+int clock_wise_left=56;
+int clock_wise_front=69;
+int clock_wise_right=82;
+int clock_wise_back_twin=96;
+int counter_clock_wise_back=90;
+int counter_clock_wise_right=77;
+int counter_clock_wise_front=62;
+int counter_clock_wise_left=48;
+int counter_clock_wise_back_twin=34;
 //
 int mysservo_maximum=170;
 int mysservo_minimum=90;
-
 //Laser
 const int ledPin = 7;  // the number of the LED pin
 //sservo
@@ -29,34 +25,25 @@ int sstepspeed=2;//sensitivity
 int sreverse=mysservo_maximum;  //reverse position of s
 int sdelay=50;
 //Wservo
-int wpos=81;      //set the initial position to 0
+int wpos=clock_wise_front;      //set the initial position to 0
 int wcpos=60;     // current position
 int wstep=0;     //no initial movement
 int wstepspeed=2;//sensitivity 
 int wdelay=50;   //movement speed conrtol, Higher mean Slower
-
-
-
-
-
-
 void setup() {
   mysservo.attach(8);  // attaches the TOP servo on pin 8 to the servo object
-  myWservo.attach(6);  // attaches the Bottom servo on pin 9 to the servo object
+  myWservo.attach(9);  // attaches the Bottom servo on pin 9 to the servo object
   Serial.begin(9600);// initialize serial communication at 9600 bits per second:
   pinMode(ledPin, OUTPUT); //initialize the led pin
   scpos=mysservo.read();       //read the postion of top servo
 //  mysservo.write(spos);        //give positional command to top servo motor   
 //  wcpos=myWservo.read();       //read the postion of bottom servo
   // rotate the Wservo make it facing front
-      myWservo.write(closk_wise_front-10); 
+      myWservo.write(clock_wise_front-10); 
       delay(1000);
-      myWservo.write(closk_wise_front); 
+      myWservo.write(clock_wise_front); 
       delay(1000);
 }
-
-
-
 void loop() 
 {
   char val = Serial.read();   //initial reading from serial monitor
@@ -97,12 +84,11 @@ void loop()
     scpos=mysservo_minimum;
   }
 //  Serial.print(scpos);
-  Serial.println(spos);
-
+//  Serial.println(spos);
  //Wservo control
   wcpos=myWservo.read();       //read the postion of servo
   myWservo.write(wpos);        //give positional command to servo motor    
-  if(wcpos<=closk_wise_back_twin && wcpos>=closk_wise_down){ //works only if its in the range
+  if(wcpos<=clock_wise_back_twin && wcpos>=counter_clock_wise_back_twin){ //works only if its in the range
     char val = Serial.read();   //initial reading from serial monitor
     wpos=wpos+wstep;            //change the positional command value
     delay(wdelay);              //Speed control
@@ -116,24 +102,23 @@ void loop()
       wstep=0;
     }  
     else if(val=='h'){              //YOU KNOW WHAT THIS IS BRO.
-      if(wcpos>closk_wise_front){
-      wpos=closk_wise_back_twin;}
-      else if(wcpos<closk_wise_front){
-      wpos=counter_closk_wise_back;}
+      if(wcpos>clock_wise_front or wcpos==clock_wise_front){
+      wpos=clock_wise_back_twin;}
+      else if(wcpos<clock_wise_front){
+      wpos=counter_clock_wise_back_twin;}
     }
   }
-  if(wcpos>closk_wise_back_twin or wpos>closk_wise_back_twin){             //If position value is about to exceed the limit,bring it back to range
-    wpos=closk_wise_back_twin;
-    wcpos=closk_wise_back_twin;
+  if(wcpos>clock_wise_back_twin or wpos>clock_wise_back_twin){             //If position value is about to exceed the limit,bring it back to range
+    wpos=clock_wise_back_twin;
+    wcpos=clock_wise_back_twin;
   }  
-  else if(wcpos<closk_wise_down or wpos<closk_wise_down){             //If position value is about to exceed the limit,bring it back to range
-    wpos=closk_wise_down;
-    wcpos=closk_wise_down;
+  else if(wcpos<counter_clock_wise_back_twin or wpos<counter_clock_wise_back_twin){             //If position value is about to exceed the limit,bring it back to range
+    wpos=counter_clock_wise_back_twin;
+    wcpos=counter_clock_wise_back_twin;
   }
-//  Serial.print(wcpos);
-//  Serial.println(wpos);
+  Serial.print(wcpos);
+  Serial.println(wpos);
 //  
 }
-
 //
 
