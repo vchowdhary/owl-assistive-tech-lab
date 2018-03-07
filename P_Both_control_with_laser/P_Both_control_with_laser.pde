@@ -4,10 +4,13 @@ import gab.opencv.*;
 
 import controlP5.*;
 import processing.serial.*;
+import processing.video.*;
 
 Serial port;
 ControlP5 cp5;
 PFont font;    //Creat Font 
+Capture video;
+OpenCV opencv;
 
 void setup() {
   size(1000,900);             //size of the window
@@ -15,7 +18,7 @@ void setup() {
   port=new Serial(this, "COM8",9600); //arduino connected to COMsth
 
   cp5 = new ControlP5(this);
-  font = createFont("calibri light",40); //Change fount
+  font = createFont("calibri light",40); //Change font
   
   Button b1 = cp5.addButton("PanL").setPosition(150,350).setSize(200,170).setFont(font);
   b1.addCallback(new CallbackListener() {
@@ -73,8 +76,17 @@ void setup() {
   //      case(ControlP5.ACTION_PRESSED): port.write('L');port.write('L');;break;
   //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
   //    }}});
+  
+  video = new Capture(this, 1000/2, 900/2);
+  opencv = new OpenCV(this, 1000/2, 900/2);
+  
+  video.start();
+  
 
 }
 
 void draw() {
+  scale(2);
+  opencv.loadImage(video);
+  image(video, 0, 0);
 }
