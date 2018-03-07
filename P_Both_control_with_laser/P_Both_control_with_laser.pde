@@ -21,16 +21,16 @@ void setup() {
   b1.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
-        case(ControlP5.ACTION_PRESSED): port.write('r');port.write('r');port.write('r');;break;
-        case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');;break;
+        case(ControlP5.ACTION_PRESSED): port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');;break;
+        case(ControlP5.ACTION_RELEASED): port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('b');port.write('b');port.write('b');;break;
       }}});
       
   Button b2 = cp5.addButton("PanR").setPosition(650,350).setSize(200,170).setFont(font);
   b2.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
-        case(ControlP5.ACTION_PRESSED): port.write('x');port.write('x');port.write('x');;break;
-        case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
+        case(ControlP5.ACTION_PRESSED): port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');;break;
+        case(ControlP5.ACTION_RELEASED): port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('b');port.write('b');port.write('b');; break;
       }}});
       
   Button b3 = cp5.addButton("TiltDown").setPosition(400,150).setSize(200,170).setFont(font);
