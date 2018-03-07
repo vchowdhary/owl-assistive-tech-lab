@@ -58,7 +58,7 @@ void setup() {
         case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
       }}}); 
 
-  Button b6 = cp5.addButton("Laser").setPosition(490,750).setSize(150,100).setFont(font);
+  Button b6 = cp5.addButton("Laser").setPosition(290,750).setSize(150,100).setFont(font);
   b6.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -66,13 +66,13 @@ void setup() {
         case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
       }}});
   
-  //Button b7 = cp5.addButton("Laser Toggle").setPosition(290,750).setSize(150,100).setFont(font);
-  //b7.addCallback(new CallbackListener() {
-  //  public void controlEvent(CallbackEvent theEvent) {
-  //    switch(theEvent.getAction()) {
-  //      case(ControlP5.ACTION_PRESSED): port.write('L');port.write('L');;break;
-  //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
-  //    }}});
+  Button b7 = cp5.addButton("Front").setPosition(490,750).setSize(150,100).setFont(font);
+  b7.addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent theEvent) {
+      switch(theEvent.getAction()) {
+        case(ControlP5.ACTION_PRESSED): port.write('j');port.write('j');port.write('j');;break;
+        case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
+      }}});
 
 }
 
