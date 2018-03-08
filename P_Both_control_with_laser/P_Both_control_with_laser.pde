@@ -11,11 +11,22 @@ ControlP5 cp5;
 PFont font;    //Creat Font 
 Capture video;
 OpenCV opencv;
+int time = millis();
+int wait = 1;
 
 void setup() {
-  size(1000,900);             //size of the window
+  size(1920, 1080);
+  frameRate(900);
+  //background(0);
+  noFill();
+ 
   printArray(Serial.list()); //prints all avaliable serial ports
-  port=new Serial(this, "COM8",9600); //arduino connected to COMsth
+  
+  String[] cameras = Capture.list();
+  
+  println("Available cameras:");
+  printArray(cameras);
+
 
   cp5 = new ControlP5(this);
   font = createFont("calibri light",40); //Change font
@@ -77,16 +88,28 @@ void setup() {
   //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
   //    }}});
   
-  video = new Capture(this, 1000/2, 900/2);
-  opencv = new OpenCV(this, 1000/2, 900/2);
-  
+  video = new Capture(this, cameras[103]);
   video.start();
+  
+  opencv = new OpenCV(this, 320, 240);
   
 
 }
 
 void draw() {
-  scale(2);
-  opencv.loadImage(video);
-  image(video, 0, 0);
+   if (millis() - time >= wait){
+    time = millis();  
+    frameRate(900);
+    scale(1);
+    image(video, 1920/2, 100, 320*2.5, 240*2.5);
+    if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
+      opencv.loadImage(video);//send the cam
+      opencv.gray();
+      opencv.threshold(70); 
+    }
+  }
+}
+
+void captureEvent(Capture c){
+  c.read();
 }
