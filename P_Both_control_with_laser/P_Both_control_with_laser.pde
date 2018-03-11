@@ -4,18 +4,32 @@ import gab.opencv.*;
 
 import controlP5.*;
 import processing.serial.*;
+import processing.video.*;
 
 Serial port;
 ControlP5 cp5;
 PFont font;    //Creat Font 
+Capture video;
+OpenCV opencv;
+int time = millis();
+int wait = 1;
 
 void setup() {
-  size(1000,900);             //size of the window
+  size(1920, 1080);
+  frameRate(900);
+  //background(0);
+  noFill();
+ 
   printArray(Serial.list()); //prints all avaliable serial ports
-  port=new Serial(this, "COM8",9600); //arduino connected to COMsth
+  
+  String[] cameras = Capture.list();
+  
+  println("Available cameras:");
+  printArray(cameras);
+
 
   cp5 = new ControlP5(this);
-  font = createFont("calibri light",40); //Change fount
+  font = createFont("calibri light",40); //Change font
   
   Button b1 = cp5.addButton("PanL").setPosition(150,350).setSize(200,170).setFont(font);
   b1.addCallback(new CallbackListener() {
@@ -66,15 +80,38 @@ void setup() {
         case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
       }}});
   
-  Button b7 = cp5.addButton("Front").setPosition(490,750).setSize(150,100).setFont(font);
-  b7.addCallback(new CallbackListener() {
-    public void controlEvent(CallbackEvent theEvent) {
-      switch(theEvent.getAction()) {
-        case(ControlP5.ACTION_PRESSED): port.write('j');port.write('j');port.write('j');;break;
-        case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
-      }}});
+
+  //Button b7 = cp5.addButton("Laser Toggle").setPosition(290,750).setSize(150,100).setFont(font);
+  //b7.addCallback(new CallbackListener() {
+  //  public void controlEvent(CallbackEvent theEvent) {
+  //    switch(theEvent.getAction()) {
+  //      case(ControlP5.ACTION_PRESSED): port.write('L');port.write('L');;break;
+  //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
+  //    }}});
+  
+  video = new Capture(this, cameras[103]);
+  video.start();
+  
+  opencv = new OpenCV(this, 320, 240);
+
 
 }
 
 void draw() {
+
+   if (millis() - time >= wait){
+    time = millis();  
+    frameRate(900);
+    scale(1);
+    image(video, 1920/2, 100, 320*2.5, 240*2.5);
+    if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
+      opencv.loadImage(video);//send the cam
+      opencv.gray();
+      opencv.threshold(70); 
+    }
+  }
+}
+
+void captureEvent(Capture c){
+  c.read();
 }
