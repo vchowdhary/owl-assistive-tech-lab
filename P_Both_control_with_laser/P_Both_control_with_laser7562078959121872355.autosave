@@ -33,7 +33,9 @@ void setup() {
   b2.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
-        case(ControlP5.ACTION_PRESSED): port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');;break;
+        case(ControlP5.ACTION_PRESSED): port.write("r5");
+       // port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');port.write('r');
+        break;
         case(ControlP5.ACTION_RELEASED): port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('b');port.write('b');port.write('b');; break;
       }}});
       
