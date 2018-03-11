@@ -2,6 +2,8 @@
 
 import controlP5.*;
 import processing.serial.*;
+import processing.video.*;
+import gab.opencv.*;
 
 Serial port;
 ControlP5 cp5;
