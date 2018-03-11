@@ -10,6 +10,8 @@ ControlP5 cp5;
 PFont font;    //Creat Font 
 int time = millis();
 int wait = 1;
+Capture video; 
+OpenCV opencv; 
 
 void setup() {
   size(1000,900);             //size of the window
@@ -99,6 +101,7 @@ void draw() {
      opencv.threshold(70); 
    }
  }
+}
 void captureEvent(Capture c){
   c.read();
  }
