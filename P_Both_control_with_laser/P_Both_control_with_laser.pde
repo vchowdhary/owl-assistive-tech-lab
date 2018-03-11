@@ -6,6 +6,8 @@ import processing.serial.*;
 Serial port;
 ControlP5 cp5;
 PFont font;    //Creat Font 
+int time = millis();
+int wait = 1;
 
 void setup() {
   size(1000,900);             //size of the window
@@ -71,8 +73,30 @@ void setup() {
         case(ControlP5.ACTION_PRESSED): port.write('j');port.write('j');port.write('j');;break;
         case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
       }}});
-
+      
+      String[] cameras = Capture.list();
+ 
+    println("Available cameras:");
+    printArray(cameras);
+    
+    video = new Capture(this, cameras[103]);
+   video.start();
+   
+   opencv = new OpenCV(this, 320, 240);
 }
 
 void draw() {
-}
+   if (millis() - time >= wait){
+    time = millis();  
+   frameRate(900);
+    scale(1);
+    image(video, 1920/2, 100, 320*2.5, 240*2.5);
+    if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
+     opencv.loadImage(video);//send the cam
+     opencv.gray();
+     opencv.threshold(70); 
+   }
+ }
+void captureEvent(Capture c){
+  c.read();
+ }
