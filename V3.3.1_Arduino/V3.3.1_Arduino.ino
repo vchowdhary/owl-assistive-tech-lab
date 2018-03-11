@@ -3,20 +3,20 @@ Servo mysservo;  // create servo object to control a servo
 Servo myWservo;  // create servo object to control a servo
 
 //Copy Data to here
-int clock_wise_back=40;
+int clock_wise_back=46;
 int clock_wise_left=56;
-int clock_wise_front=69;
-int clock_wise_right=82;
-int clock_wise_back_twin=96;
+int clock_wise_front=71;
+int clock_wise_right=84;
+int clock_wise_back_twin=97;
 
-int counter_clock_wise_back=90;
-int counter_clock_wise_right=77;
-int counter_clock_wise_front=62;
-int counter_clock_wise_left=48;
-int counter_clock_wise_back_twin=34;
+int counter_clock_wise_back=85;
+int counter_clock_wise_right=71;
+int counter_clock_wise_front=59;
+int counter_clock_wise_left=44;
+int counter_clock_wise_back_twin=33;
 //
-int mysservo_maximum=126;
-int mysservo_minimum=50;
+int mysservo_maximum=105;
+int mysservo_minimum=8;
 
 //Laser
 const int ledPin = 7;  // the number of the LED pin
