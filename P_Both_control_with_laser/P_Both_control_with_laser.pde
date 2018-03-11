@@ -15,6 +15,7 @@ int time = millis();
 int wait = 1;
 
 void setup() {
+  port=new Serial(this, "/dev/cu.usbmodem1D1121",9600); //arduino connected to COMsth
   size(1920, 1080);
   frameRate(900);
   //background(0);
@@ -80,11 +81,7 @@ void setup() {
         case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
       }}});
   
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/processing
   //Button b7 = cp5.addButton("Laser Toggle").setPosition(290,750).setSize(150,100).setFont(font);
   //b7.addCallback(new CallbackListener() {
   //  public void controlEvent(CallbackEvent theEvent) {
@@ -93,13 +90,11 @@ void setup() {
   //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
   //    }}});
   
-  video = new Capture(this, cameras[103]);
+  video = new Capture(this, cameras[24]);
   video.start();
   
   opencv = new OpenCV(this, 320, 240);
-<<<<<<< HEAD
-  
-=======
+
   Button b7 = cp5.addButton("Front").setPosition(490,750).setSize(150,100).setFont(font);
   b7.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
@@ -107,19 +102,10 @@ void setup() {
         case(ControlP5.ACTION_PRESSED): port.write('j');port.write('j');port.write('j');;break;
         case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
       }}});
->>>>>>> master
-=======
-
->>>>>>> origin/processing
 
 }
 
 void draw() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/processing
    if (millis() - time >= wait){
     time = millis();  
     frameRate(900);
@@ -136,9 +122,4 @@ void draw() {
 void captureEvent(Capture c){
   c.read();
 }
-<<<<<<< HEAD
-=======
-}
->>>>>>> master
-=======
->>>>>>> origin/processing
+
