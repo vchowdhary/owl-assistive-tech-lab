@@ -15,6 +15,7 @@ int time = millis();
 int wait = 1;
 
 void setup() {
+  port=new Serial(this, "/dev/cu.usbmodem1D1121",9600); //arduino connected to COMsth
   size(1920, 1080);
   frameRate(900);
   //background(0);
@@ -89,7 +90,7 @@ void setup() {
   //      case(ControlP5.ACTION_RELEASED): port.write('l');port.write('l');; break;
   //    }}});
   
-  video = new Capture(this, cameras[103]);
+  video = new Capture(this, cameras[24]);
   video.start();
   
   opencv = new OpenCV(this, 320, 240);
