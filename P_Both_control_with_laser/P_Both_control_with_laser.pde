@@ -95,11 +95,17 @@ void setup() {
   
   opencv = new OpenCV(this, 320, 240);
 
+  Button b7 = cp5.addButton("Front").setPosition(490,750).setSize(150,100).setFont(font);
+  b7.addCallback(new CallbackListener() {
+    public void controlEvent(CallbackEvent theEvent) {
+      switch(theEvent.getAction()) {
+        case(ControlP5.ACTION_PRESSED): port.write('j');port.write('j');port.write('j');;break;
+        case(ControlP5.ACTION_RELEASED): port.write('b');port.write('b');port.write('b');; break;
+      }}});
 
 }
 
 void draw() {
-
    if (millis() - time >= wait){
     time = millis();  
     frameRate(900);
@@ -116,3 +122,4 @@ void draw() {
 void captureEvent(Capture c){
   c.read();
 }
+
