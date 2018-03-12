@@ -47,8 +47,10 @@ void setup() {
 //  wcpos=myWservo.read();       //read the postion of bottom servo
   // rotate the Wservo make it facing front
       myWservo.write(clock_wise_front-10); 
+      Serial.print((String) (millis()) +",Initialize Pan Servo,"+myWservo.read()+"\n");
       delay(1000);
       myWservo.write(clock_wise_front); 
+      Serial.print((String) (millis()) +",Initialize Pan Servo" + myWservo.read()+"\n");
       delay(1000);
 }
 
@@ -60,9 +62,11 @@ void loop()
   //Laser Control
   if(val=='L'){
     digitalWrite(ledPin, HIGH);   // turn LED on:
+     Serial.print((String) (millis()) +",Laser On,"+" "+"\n");
   } 
   if(val=='l'){
     digitalWrite(ledPin, LOW);    // turn LED off:
+     Serial.print((String) (millis()) +",Laser Off,"+" "+"\n");
   }
   
   //Top servo control
@@ -72,20 +76,25 @@ void loop()
   { 
     spos=spos+sstep;            //change the positional command value
     delay(sdelay);              //Speed control
-    if(val=='q'){               //if val is true, then it movesone way.
-      sstep=sstepspeed;    
+    if(val=='q'){//if val is true, then it movesone way.
+      sstep=sstepspeed; 
+       Serial.print((String) (millis()) +",Tilt Servo Moving Down," + mysservo.read()+"\n");   
     }
     else if(val=='w'){               //if val is true, then it moves another way.
-      sstep=-sstepspeed;              
+      sstep=-sstepspeed;   
+      Serial.print((String) (millis()) +",Tilt Servo Moving Up," + mysservo.read()+"\n");              
     }  
     else if(val=='e'){               //if val is true, then it stops.
       sstep=0;
+      Serial.print((String) (millis()) +",Tilt Servo Stop," + mysservo.read()+"\n");   
     }
     else if(val=='h'){              //Look back
       spos=sreverse;
+      Serial.print((String) (millis()) +",Tilt Servo Back," + mysservo.read()+"\n");   
     }
     else if(val=='j'){              //Look front
      spos=sfront;
+     Serial.print((String) (millis()) +",Tilt Servo Front," + mysservo.read()+"\n");   
     }
    }  
   else if(scpos>mysservo_maximum or spos>mysservo_maximum){             //If position value is about to exceed the limit,bring it back to range
@@ -107,26 +116,31 @@ void loop()
     wpos=wpos+wstep;            //change the positional command value
     delay(wdelay);              //Speed control
     if(val=='r'){               //if val is true, then it movesone way.
-      wstep=wstepspeed;    
+      wstep=wstepspeed;  
+      Serial.print((String) (millis()) +",Pan Servo Moving Right," + myWservo.read()+"\n");     
     }
     else if(val=='x'){               //if val is true, then it moves another way.
-      wstep=-wstepspeed;              
+      wstep=-wstepspeed;     
+      Serial.print((String) (millis()) +",Pan Servo Moving Left," + myWservo.read()+"\n");         
     }  
     else if(val=='b'){               //if val is true, then it stops.
       wstep=overshoot_control;       //apply overshoot value
-      wstep=0;                       //make the change to 0
+      wstep=0; //make the change to 0
+      Serial.print((String) (millis()) +",Pan Servo Stop," + myWservo.read()+"\n");
     }  
     else if(val=='h'){              //Look back based on current postion clockwise ot counter clock
       if(wcpos>clock_wise_front or wcpos==clock_wise_front){
       wpos=clock_wise_back_twin;}
       else if(wcpos<clock_wise_front){
       wpos=counter_clock_wise_back_twin;}
+      Serial.print((String) (millis()) +",Pan Servo Moving Back," + myWservo.read()+"\n");
     }
         else if(val=='j'){              //Look front based on current postion clockwise ot counter clock
       if(wcpos>clock_wise_front or wcpos==clock_wise_front){
       wpos=counter_clock_wise_front;}
       else if(wcpos<clock_wise_front){
       wpos=clock_wise_front;}
+      Serial.print((String) (millis()) +",Pan Servo Moving Front," + myWservo.read()+"\n");
     }
   }
   if(wcpos>clock_wise_back_twin or wpos>clock_wise_back_twin){             //If position value is about to exceed the limit,bring it back to range
