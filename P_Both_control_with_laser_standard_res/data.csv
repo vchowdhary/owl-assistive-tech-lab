@@ -1,0 +1,52 @@
+Timestamp,Action,Angle
+0,Initialize Pan Servo,61
+9718,Pan Servo Moving Right,71
+9819,Pan Servo Moving Right,71
+9919,Pan Servo Moving Right,74
+10020,Pan Servo Moving Right,77
+10321,Pan Servo Moving Left,86
+10422,Pan Servo Moving Left,89
+10523,Pan Servo Moving Left,86
+10624,Pan Servo Stop,83
+37185,Pan Servo Moving Right,80
+37285,Pan Servo Moving Right,80
+37387,Pan Servo Moving Right,83
+37487,Pan Servo Moving Right,86
+37889,Pan Servo Moving Left,97
+37990,Pan Servo Moving Left,97
+38090,Pan Servo Moving Left,94
+38192,Pan Servo Stop,91
+42451,Tilt Servo Moving Up,90
+44557,Tilt Servo Stop,70
+44657,Tilt Servo Stop,69
+44708,Pan Servo Moving Right,88
+44809,Pan Servo Moving Right,88
+44909,Pan Servo Moving Right,91
+45010,Pan Servo Moving Right,94
+46714,Pan Servo Moving Left,97
+46816,Pan Servo Moving Left,97
+46916,Pan Servo Moving Left,94
+47017,Pan Servo Stop,91
+47118,Pan Servo Moving Left,88
+47218,Pan Servo Moving Left,88
+47320,Pan Servo Moving Left,85
+47420,Pan Servo Moving Left,82
+48523,Pan Servo Moving Right,49
+48624,Pan Servo Moving Right,46
+48724,Pan Servo Moving Right,49
+48826,Pan Servo Stop,52
+48926,Pan Servo Stop,55
+48976,Tilt Servo Moving Down,69
+49078,Tilt Servo Moving Down,69
+49880,Tilt Servo Stop,77
+49981,Tilt Servo Stop,78
+50081,Tilt Servo Back,78
+50131,Pan Servo Moving Back,55
+50183,Tilt Servo Back,105
+51135,Pan Servo Stop,33
+51337,Pan Servo Moving Front,33
+51387,Tilt Servo Front,105
+51437,Pan Servo Moving Front,71
+52340,Pan Servo Stop,71
+52541,Laser On,
+53344,Laser Off,
