@@ -20,8 +20,11 @@ int windowWidth;
 
 void setup() {
   windowLength = 1300; 
-  windowWidth = 1080; 
-  size(1300,1080);             //size of the window
+  windowWidth = 1080;
+  fullScreen(); 
+  println("Width: " + width); 
+  println("Height: " + height); 
+  //size of the window
   ports = Serial.list(); 
   printArray(ports);//prints all avaliable serial ports
   port=new Serial(this, ports[ports.length - 1],9600); //arduino connected to COMsth
