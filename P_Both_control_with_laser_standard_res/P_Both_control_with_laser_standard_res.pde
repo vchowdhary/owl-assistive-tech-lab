@@ -19,15 +19,11 @@ int windowLength;
 int windowWidth; 
 
 void setup() {
-  windowLength = 1300; 
-  windowWidth = 1080;
-  fullScreen(); 
-  println("Width: " + width); 
-  println("Height: " + height); 
+  size(867, 500);
   //size of the window
   ports = Serial.list(); 
   printArray(ports);//prints all avaliable serial ports
-  port=new Serial(this, ports[ports.length - 1],9600); //arduino connected to COMsth
+ // port=new Serial(this, ports[ports.length - 1],9600); //arduino connected to COMsth
   
   data = new Table();
   data.addColumn("Timestamp");
@@ -35,9 +31,9 @@ void setup() {
   data.addColumn("Angle");
   
   cp5 = new ControlP5(this);
-  font = createFont("calibri light",40); //Change fount
+  font = createFont("calibri light",20); //Change fount
   // pan left button
-  Button b1 = cp5.addButton("PanL").setPosition(150,350).setSize(200,170).setFont(font);
+  Button b1 = cp5.addButton("PanL").setPosition(30, 100).setSize(100,75).setFont(font);
   b1.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -46,7 +42,7 @@ void setup() {
       }}});
       
       
-  b2 = cp5.addButton("PanR").setPosition(650,350).setSize(200,170).setFont(font);
+  b2 = cp5.addButton("PanR").setPosition(250,100).setSize(100,75).setFont(font);
   b2.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -54,7 +50,7 @@ void setup() {
         case(ControlP5.ACTION_LEAVE): port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('x');port.write('b');port.write('b');port.write('b');;break;
       }}});
  
-  Button b3 = cp5.addButton("TiltDown").setPosition(400,550).setSize(200,170).setFont(font);
+  Button b3 = cp5.addButton("TiltDown").setPosition(140,200).setSize(100,75).setFont(font);
   b3.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -62,7 +58,7 @@ void setup() {
         case(ControlP5.ACTION_LEAVE): port.write('e');port.write('e');port.write('e');; break;
       }}});
   
-   Button b4 = cp5.addButton("TiltUp").setPosition(400,150).setSize(200,170).setFont(font);
+   Button b4 = cp5.addButton("TiltUp").setPosition(140,25).setSize(100,75).setFont(font);
   b4.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -71,7 +67,7 @@ void setup() {
       }}});
 
        
-  Button b5 = cp5.addButton("Back").setPosition(690,750).setSize(150,100).setFont(font);
+  Button b5 = cp5.addButton("Back").setPosition(35,350).setSize(75,50).setFont(font);
   b5.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -79,7 +75,7 @@ void setup() {
         case(ControlP5.ACTION_LEAVE): port.write('b');port.write('b');port.write('b');; break;
       }}}); 
 
-  Button b6 = cp5.addButton("Laser").setPosition(290,750).setSize(150,100).setFont(font);
+  Button b6 = cp5.addButton("Laser").setPosition(175,350).setSize(75,50).setFont(font);
   b6.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -87,7 +83,7 @@ void setup() {
         case(ControlP5.ACTION_LEAVE): port.write('l');port.write('l');; break;
       }}});
   
-  Button b7 = cp5.addButton("Front").setPosition(490,750).setSize(150,100).setFont(font);
+  Button b7 = cp5.addButton("Front").setPosition(300,350).setSize(75,50).setFont(font);
   b7.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
       switch(theEvent.getAction()) {
@@ -100,7 +96,7 @@ void setup() {
     println("Available cameras:");
     printArray(cameras);
     
-    video = new Capture(this, cameras[cameras.length - 1]);
+    video = new Capture(this, cameras[0]);
    video.start();
    
    opencv = new OpenCV(this, 320, 240);
@@ -111,7 +107,7 @@ void draw() {
     time = millis();  
    frameRate(900);
     scale(1);
-    image(video, windowLength/2, 100, 320*2.5, 240*2.5);
+    image(video, 400, 100, 1920*0.22, 1080*0.22);
     if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
      opencv.loadImage(video);//send the cam
      opencv.gray();
