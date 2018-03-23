@@ -18,6 +18,8 @@ Table data;
 int windowLength; 
 int windowWidth; 
 int mouseSetting = 2;
+boolean laser = false;
+boolean camera = true;
 
 void setup() {
   size(1260, 780);
@@ -244,42 +246,26 @@ void setup() {
   Button b6 = cp5.addButton("Laser").setPosition(200,500).setSize(125, 75).setFont(font);
   b6.addCallback(new CallbackListener() {
     public void controlEvent(CallbackEvent theEvent) {
-      if(mouseSetting == 0); 
-      else if(mouseSetting == 1)
-      {
-        switch(theEvent.getAction()) {
-          case(ControlP5.ACTION_ENTER):
-            {
-              //for(int i = 0; i <= 2; i++) port.write('L');
-              println("motor laser");
-              break;
-            }
-          case(ControlP5.ACTION_LEAVE):
-          {
-            //for(int i = 0; i <= 2; i++) port.write('l');
-            println("motor stop laser");
-            break;
-          }
-        }
-      }
-      else if(mouseSetting == 2)
-      {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED):
-            {
-              //for(int i = 0; i <= 2; i++) port.write('L');
-              println("motor laser");
-              break;
-            }
-          case(ControlP5.ACTION_RELEASED):
           {
-            //for(int i = 0; i <= 2; i++) port.write('l');
-            println("motor stop laser");
-            break;
+              if(laser)
+              {
+                //for(int i = 0; i <= 2; i++) port.write('L');
+                println("motor laser");
+                laser = false;
+              }
+              else
+              {
+                //for(int i = 0; i <= 2; i++) port.write('l');
+                println("motor stop laser");
+                laser = true;
+              }
+              break;
           }
         } 
       }
-    }});
+   });
   
   Button b7 = cp5.addButton("Front").setPosition(375,500).setSize(125, 75).setFont(font);
   b7.addCallback(new CallbackListener() {
@@ -326,6 +312,30 @@ void setup() {
             .setFont(font);
   mouseToggle.addItems(split("Disable,Hover,Click", ','));
   
+  Button cameraToggle = cp5.addButton("Toggle Camera").setPosition(800, 650)
+                            .setSize(150, 50)
+                            .setFont(font);
+  cameraToggle.addCallback(new CallbackListener() {
+       public void controlEvent(CallbackEvent theEvent) {
+         switch(theEvent.getAction()) {
+            case(ControlP5.ACTION_PRESSED):
+            {
+                if(camera)
+                {
+                  camera = false;
+                  println("camera toggled off");
+                }
+                else
+                {
+                  camera = true;
+                  println("camera toggled on");
+                }
+                break;
+            }
+          } 
+       }    
+  });
+  
       String[] cameras = Capture.list();
  
     println("Available cameras:");
@@ -341,12 +351,20 @@ void draw() {
    if (millis() - time >= wait){
     time = millis();  
     scale(1);
-    image(video, 1280/2 - 100, 125, 1920*0.35, 1080*0.35);
-    if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
-     opencv.loadImage(video);//send the cam
-     opencv.gray();
-     opencv.threshold(70); 
-   }
+    if(camera)
+    {
+        image(video, 1280/2 - 100, 125, 1920*0.35, 1080*0.35);
+        if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
+         opencv.loadImage(video);//send the cam
+         opencv.gray();
+         opencv.threshold(70); 
+       }
+    }
+    else
+    {
+       rect(1280/2 - 100, 125, 1920*0.35, 1080*0.35);
+      
+    }
   }
 }
 
