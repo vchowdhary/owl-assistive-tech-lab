@@ -336,22 +336,20 @@ void setup() {
        }    
   });
   
-      String[] cameras = Capture.list();
+    String[] cameras = Capture.list();
  
     println("Available cameras:");
     printArray(cameras);
-    
-    video = new Capture(this, cameras[1]);
-   video.start();
-   
-   opencv = new OpenCV(this, 320, 240);
+    video = new Capture(this, cameras[pickCamera(cameras)]);
+    video.start();
+    opencv = new OpenCV(this, 320, 240);
 }
 
 void draw() {
    if (millis() - time >= wait){
     time = millis();  
     scale(1);
-    if(camera)
+    //if(camera)
     {
         image(video, 1280/2 - 100, 125, 1920*0.35, 1080*0.35);
         if(video.width > 0 && video.height > 0){//check if the cam instance has loaded pixels
@@ -360,12 +358,28 @@ void draw() {
          opencv.threshold(70); 
        }
     }
-    else
-    {
-       rect(1280/2 - 100, 125, 1920*0.35, 1080*0.35);
+    //else
+    //{
+    //   rect(1280/2 - 100, 125, 1920*0.35, 1080*0.35);
       
-    }
+    //}
   }
+}
+
+int pickCamera(String[] cameras)
+{
+   for(int i = 0; i < cameras.length; i++)
+   {
+      if(cameras[i].indexOf("HD") != -1 && 
+         cameras[i].indexOf("1920x1080") != -1 &&
+         cameras[i].indexOf("fps=30") != -1) 
+         {
+           println("Chosen camera index: " + i);
+           return i;
+         }
+   }
+   println("Camera not found");
+   return 0;
 }
 
 void MouseToggle (int n){
