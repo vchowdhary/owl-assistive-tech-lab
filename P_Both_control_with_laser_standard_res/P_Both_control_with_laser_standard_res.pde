@@ -4,6 +4,8 @@ import controlP5.*;
 import processing.serial.*;
 import processing.video.*;
 import gab.opencv.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 Serial port;
 ControlP5 cp5;
@@ -20,6 +22,9 @@ int windowWidth;
 int mouseSetting = 2;
 boolean laser = false;
 boolean camera = true;
+File configFile;
+BufferedReader reader;
+String settings[];
 
 void setup() {
   size(1260, 780);
@@ -27,14 +32,28 @@ void setup() {
   ports = Serial.list(); 
   printArray(ports);//prints all avaliable serial ports
  // port=new Serial(this, ports[ports.length - 1],9600); //arduino connected to COMsth
-  
+   
+   settings = loadStrings("config.txt");
+
+   //C:\Users\Owner\Documents\GitHub\owl-internship\P_Both_control_with_laser_standard_res
+   println("This file has " + settings.length + " lines");
+   printArray(settings);
+   
+   appendTextToFile("config.txt", "g");
+   
+   settings = loadStrings("config.txt");
+
+   //C:\Users\Owner\Documents\GitHub\owl-internship\P_Both_control_with_laser_standard_res
+   println("This file has " + settings.length + " lines");
+   printArray(settings);
+   
   data = new Table();
   data.addColumn("Timestamp");
   data.addColumn("Action");
   data.addColumn("Angle");
   
   cp5 = new ControlP5(this);
-  font = createFont("calibri light",20); //Change fount
+  font = createFont("calibri light",20); //Change font
   // pan left button
   Button b1 = cp5.addButton("PanL").setPosition(30, 175).setSize(150, 80).setFont(font);
   b1.addCallback(new CallbackListener() {
@@ -411,3 +430,31 @@ void captureEvent(Capture c){
        }
     } 
  }
+ 
+ void appendTextToFile(String filename, String text)
+ {
+    File f = new File(dataPath(filename));
+    if(!f.exists())
+    {
+      createFile(f);
+    }
+    try {
+    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+    out.println(text);
+    out.close();
+    }catch (IOException e){
+      e.printStackTrace();
+    }
+  }
+  
+void createFile(File f)
+{
+  try
+  {
+    f.createNewFile();
+  }
+  catch(Exception e)
+  {
+    e.printStackTrace();
+  }
+}   
