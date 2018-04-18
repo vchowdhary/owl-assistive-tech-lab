@@ -25,6 +25,7 @@ boolean camera = true;
 File configFile;
 BufferedReader reader;
 String settings[];
+String updatedSettings[];
 
 void setup() {
   size(1260, 780);
@@ -34,18 +35,30 @@ void setup() {
  // port=new Serial(this, ports[ports.length - 1],9600); //arduino connected to COMsth
    
    settings = loadStrings("config.txt");
+   updatedSettings = new String[settings.length];
 
    //C:\Users\Owner\Documents\GitHub\owl-internship\P_Both_control_with_laser_standard_res
    println("This file has " + settings.length + " lines");
    printArray(settings);
    
-   appendTextToFile("config.txt", "g");
-   
-   settings = loadStrings("config.txt");
-
-   //C:\Users\Owner\Documents\GitHub\owl-internship\P_Both_control_with_laser_standard_res
-   println("This file has " + settings.length + " lines");
-   printArray(settings);
+    switch(settings[0])
+    {
+      case "Hover":
+      {
+         mouseSetting = 1;
+         break;
+      }
+      case "Click":
+      {
+        mouseSetting = 2;
+        break;
+      }
+      case "Disabled":
+      {
+        mouseSetting = 0;
+        break;
+      }
+    }
    
   data = new Table();
   data.addColumn("Timestamp");
@@ -404,6 +417,24 @@ int pickCamera(String[] cameras)
 void MouseToggle (int n){
   println("bar clicked, item value:", n); 
   mouseSetting = n;
+  switch(n)
+  {
+     case 0:
+     {
+        updatedSettings[0] = "Disabled";
+        break;
+     }
+     case 1:
+     {
+        updatedSettings[0] = "Hover";
+        break;
+     }
+     case 2:
+     {
+        updatedSettings[0] = "Click"; 
+        break;
+     }
+  }
 }
 
 void captureEvent(Capture c){
@@ -458,3 +489,9 @@ void createFile(File f)
     e.printStackTrace();
   }
 }   
+
+void stop()
+{
+   println("stop");
+   super.stop();
+}
